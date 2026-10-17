@@ -30,7 +30,7 @@
     .quote{display:inline-block;margin-top:20px;background:var(--navy);color:#fff;border-radius:16px;padding:12px 15px;font-weight:850}
     .video-shell{position:relative;background:linear-gradient(145deg,#0f4f69,#0b3148);border-radius:30px;padding:12px;box-shadow:var(--shadow);min-height:520px;overflow:hidden}
     .video-slot{position:absolute;inset:12px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#7dd3fc,#0e7490 58%,#164e63)}
-    .video-slot video,.video-slot iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+    .video-slot img{width:100%;height:100%;object-fit:cover;display:block}
     .mobile-video-play{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:8;border:0;border-radius:999px;background:rgba(255,255,255,.96);color:var(--navy);font-weight:900;padding:13px 18px;box-shadow:0 10px 30px rgba(0,0,0,.22);cursor:pointer;white-space:nowrap}
     .video-link{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;text-align:center}
     .video-link:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,47,73,.08),rgba(8,47,73,.58))}
@@ -79,17 +79,10 @@
         </div>
         <div class="video-shell" aria-label="Анекдот Владимира">
           <div class="video-slot" id="videoSlot">
-            <div class="placeholder" id="videoPlaceholder">
-              <div>
-                <div class="captain">⚓</div>
-                <b>Видео капитана готовится к выходу в море</b><br>
-                <small>Яхта · тельняшка · «Волга-Волга»</small>
-              </div>
-            </div>
+            <img src="./vladimir_site.jpg" alt="Капитан Владимир в тельняшке на Волге">
+            <button class="mobile-video-play" id="audioPlay" type="button">▶ Слушать анекдот</button>
           </div>
-          <div class="ring"><span>ВОЛГА-ВОЛГА</span></div>
-          <div class="deck"></div>
-        </div>
+          </div>
         <div class="video-caption">Сегодня у меня день рождения. Подарки принимаю. Выбирайте на сайте.</div>
       </div>
     </div>
@@ -152,90 +145,43 @@
     }));
     document.getElementById('talkBtn').addEventListener('click',e=>{e.preventDefault();const url=tg('talk');if(url!=='#') location.href=url;});
 
-    const slot=document.getElementById('videoSlot');
-    const placeholder=document.getElementById('videoPlaceholder');
-    if(cfg.videoMp4){
-      placeholder.remove();
+    const play=document.getElementById('audioPlay');
+    const audio=new Audio('./vladimir_original.mp3');
+    audio.preload='auto';
+    const start=4.15;
+    const end=18.55;
 
-      const start=4.15;
-      const end=18.55;
+    const resetAudio=()=>{
+      audio.pause();
+      try{audio.currentTime=start;}catch(e){}
+      play.textContent='▶ Слушать анекдот';
+    };
 
-      const v=document.createElement('video');
-      v.src=cfg.videoMp4;
-      v.playsInline=true;
-      v.preload='auto';
-      v.muted=true;
-      v.poster=cfg.videoPoster||'';
-      slot.prepend(v);
+    audio.addEventListener('loadedmetadata',()=>{
+      try{audio.currentTime=start;}catch(e){}
+    });
 
-      const audio=new Audio('https://resource2.heygen.ai/audio/f10592b65d374e238f1c352ea2bd4d7e/original.mp3');
-      audio.preload='auto';
+    audio.addEventListener('timeupdate',()=>{
+      if(audio.currentTime>=end) resetAudio();
+    });
 
-      const play=document.createElement('button');
-      play.className='mobile-video-play';
-      play.type='button';
-      play.textContent='▶ Смотреть анекдот';
-      slot.append(play);
+    audio.addEventListener('ended',resetAudio);
 
-      let started=false;
-
-      const prepare=()=>{
-        try{ v.currentTime=start; }catch(e){}
-        try{ audio.currentTime=start; }catch(e){}
-      };
-
-      const stop=()=>{
-        v.pause();
-        audio.pause();
-        started=false;
-        prepare();
-        play.textContent='▶ Смотреть анекдот';
-      };
-
-      const startPlayback=async()=>{
-        if(!started) prepare();
+    play.addEventListener('click',async()=>{
+      if(audio.paused){
+        if(audio.currentTime<start || audio.currentTime>=end-.05){
+          try{audio.currentTime=start;}catch(e){}
+        }
         try{
-          await Promise.all([v.play(),audio.play()]);
-          started=true;
+          await audio.play();
           play.textContent='❚❚ Пауза';
         }catch(e){
-          v.pause();
-          audio.pause();
-          play.textContent='▶ Смотреть анекдот';
-          showToast('Нажмите ещё раз, чтобы запустить видео.');
+          showToast('Нажмите ещё раз, чтобы запустить анекдот.');
         }
-      };
-
-      play.addEventListener('click',()=>{
-        if(v.paused) startPlayback();
-        else{
-          v.pause();
-          audio.pause();
-          play.textContent='▶ Продолжить';
-        }
-      });
-
-      v.addEventListener('timeupdate',()=>{
-        if(v.currentTime>=end) stop();
-      });
-
-      v.addEventListener('ended',stop);
-      v.addEventListener('error',()=>{
-        showToast('Видео не загрузилось. Обновите страницу.');
-      });
-      audio.addEventListener('error',()=>{
-        showToast('Звук не загрузился. Обновите страницу.');
-      });
-    } else if(cfg.videoPage){
-      placeholder.remove();
-      const a=document.createElement('a');
-      a.className='video-link';
-      a.href=cfg.videoPage;
-      a.target='_blank';
-      a.rel='noopener';
-      if(cfg.videoPreview) a.style.backgroundImage='url("'+cfg.videoPreview+'")';
-      a.innerHTML='<div class="playbox">▶ Смотреть видео<small>Откроется отдельно</small></div>';
-      slot.prepend(a);
-    }
+      }else{
+        audio.pause();
+        play.textContent='▶ Продолжить';
+      }
+    });
   </script>
 </body></html>
