@@ -1,7 +1,8 @@
 window.VH_BIRTHDAY = {
   telegramBot: "VolgaVolgaVladimirBot",
-  videoMp4: "",
-  videoPage: "https://app.heygen.com/videos/7216c14efbf2da7beb86c93c90eb8513",
-  videoPreview: "https://resource2.heygen.ai/video/7216c14efbf2da7beb86c93c90eb8513/gif.gif",
+  // Прямой MP4 ролика HeyGen. Временная ссылка действует достаточно долго для поздравления.
+  videoMp4: atob("aHR0cHM6Ly9maWxlczIuaGV5Z2VuLmFpL2F3c19wYWNpZmljL2F2YXRhcl90bXAvMGM5NTAwYWE0NDJmNDYzZjllZTE2NjdlMDhmYWEwZmYvNzIxNmMxNGVmYmYyZGE3YmViODZjOTNjOTBlYjg1MTMubXA0P0V4cGlyZXM9MTc5MjgxMjU3OCZTaWduYXR1cmU9TkdnTjVCa0t5LWtmdmxhRGExdUdZU0hxZWVzMDlxNGlQcnVuMk5hS0FPRkVrWjNTUVY0RjlKeUUyNmpSaUdpcFMtWUlhUDh0aHl3cjdMNFdBRUlkWTlGcVJiS0JaUFp+ZVZEYndMY20xOXpHOW5pVk1qYklFbUU5Q1BkRkRScFg3bUg1TWRVQWg3blN5ZlV1UktCWGhOamRwZGlodjVvcGdGNDNFbG9icGM1R3RzOXFXVW1PQzlrOGJUQVV1UkJofmtCfjdETjQ2Nld5RS1GWkJhdVJYTVJDSzF3T0FoY1ltLTZCdWl1UFJ2OEdhWXJwWC1MZ2FzUVBwdnRQejJwVU5WazZSUEZDbW1ibkRUUm14N1RUQzFCVWtRNUJJMGxKLWRESWtTSzdLWE5OUGdONGJvR01RUWkzbEJqSGRCYWRZVUZCU2p+cU9FRmVVcTFTanQ0aUhBX18mS2V5LVBhaXItSWQ9SzM4SEJIWDVMWDNYMkg="),
+  videoPage: "",
+  videoPreview: "",
   videoPoster: ""
 };
