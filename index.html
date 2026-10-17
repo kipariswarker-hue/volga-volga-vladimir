@@ -96,10 +96,10 @@
         <div class="muted">Четыре варианта. Капитан человек практический.</div>
       </div>
       <div class="gifts">
-        <a class="gift" data-start="contract" href="#"><div class="ico">📑</div><div><b>Серьёзный контракт</b><small>Правильный подарок от серьёзных людей.</small></div></a>
-        <a class="gift" data-start="contact" href="#"><div class="ico">🤝</div><div><b>Полезное знакомство</b><small>Иногда стоит дороже рекламы.</small></div></a>
-        <a class="gift" data-start="transfer" href="#"><div class="ico">💸</div><div><b>Денежный перевод</b><small>Капитан не станет спорить с хорошей идеей.</small></div></a>
-        <a class="gift" data-start="twenty" href="#"><div class="ico">💰</div><div><b>20 миллионов без сдачи</b><small>Вот это уже разговор взрослых людей.</small></div></a>
+        <a class="gift" data-start="contract" href="https://t.me/VolgaVolgaVladimirBot?start=contract"><div class="ico">📑</div><div><b>Серьёзный контракт</b><small>Правильный подарок от серьёзных людей.</small></div></a>
+        <a class="gift" data-start="contact" href="https://t.me/VolgaVolgaVladimirBot?start=contact"><div class="ico">🤝</div><div><b>Полезное знакомство</b><small>Иногда стоит дороже рекламы.</small></div></a>
+        <a class="gift" data-start="transfer" href="https://t.me/VolgaVolgaVladimirBot?start=transfer"><div class="ico">💸</div><div><b>Денежный перевод</b><small>Капитан не станет спорить с хорошей идеей.</small></div></a>
+        <a class="gift" data-start="twenty" href="https://t.me/VolgaVolgaVladimirBot?start=twenty"><div class="ico">💰</div><div><b>20 миллионов без сдачи</b><small>Вот это уже разговор взрослых людей.</small></div></a>
       </div>
     </div>
   </section>
@@ -122,7 +122,7 @@
           <h2>Есть вопрос? Поговорите с цифровым Владимиром.</h2>
           <p>Он постарается ответить. Правда, первые три раза может сначала рассказать анекдот. У каждого капитана свои навигационные приборы.</p>
         </div>
-        <a class="btn alt" id="talkBtn" href="#">Поговорить с капитаном</a>
+        <a class="btn alt" id="talkBtn" href="https://t.me/VolgaVolgaVladimirBot?start=talk">Поговорить с капитаном</a>
       </div>
     </div>
   </section>
@@ -135,15 +135,6 @@
     const cfg = window.VH_BIRTHDAY || {};
     const toast = document.getElementById('toast');
     const showToast = (m) => { toast.textContent=m; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2400); };
-
-    function tg(start){
-      if(!cfg.telegramBot){ showToast('Связь с капитаном ещё швартуется. Скоро будет готово.'); return '#'; }
-      return 'https://t.me/' + cfg.telegramBot.replace('@','') + '?start=' + encodeURIComponent(start || 'hello');
-    }
-    document.querySelectorAll('[data-start]').forEach(a=>a.addEventListener('click',e=>{
-      e.preventDefault(); const url=tg(a.dataset.start); if(url!=='#') location.href=url;
-    }));
-    document.getElementById('talkBtn').addEventListener('click',e=>{e.preventDefault();const url=tg('talk');if(url!=='#') location.href=url;});
 
     const play=document.getElementById('audioPlay');
     const audio=new Audio('./vladimir_original.mp3');
