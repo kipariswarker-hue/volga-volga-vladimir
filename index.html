@@ -31,6 +31,10 @@
     .video-shell{position:relative;background:linear-gradient(145deg,#0f4f69,#0b3148);border-radius:30px;padding:12px;box-shadow:var(--shadow);min-height:520px;overflow:hidden}
     .video-slot{position:absolute;inset:12px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#7dd3fc,#0e7490 58%,#164e63)}
     .video-slot video,.video-slot iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+    .video-link{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;text-align:center}
+    .video-link:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,47,73,.08),rgba(8,47,73,.58))}
+    .video-link .playbox{position:relative;z-index:1;background:rgba(255,255,255,.94);color:var(--navy);padding:16px 20px;border-radius:18px;font-weight:900;box-shadow:var(--shadow)}
+    .video-link .playbox small{display:block;font-weight:700;color:#475569;margin-top:4px}
     .placeholder{height:100%;display:grid;place-items:center;text-align:center;color:#fff;padding:30px}
     .captain{font-size:96px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2))}
     .ring{position:absolute;right:18px;top:18px;width:105px;height:105px;border:16px solid #fff;border-radius:50%;
@@ -150,9 +154,16 @@
     if(cfg.videoMp4){
       placeholder.remove();
       const v=document.createElement('video'); v.src=cfg.videoMp4; v.controls=true; v.playsInline=true; v.preload='metadata'; v.poster=cfg.videoPoster||''; slot.prepend(v);
-    } else if(cfg.videoEmbed){
+    } else if(cfg.videoPage){
       placeholder.remove();
-      const f=document.createElement('iframe'); f.src=cfg.videoEmbed; f.allow='autoplay; fullscreen; picture-in-picture'; f.allowFullscreen=true; slot.prepend(f);
+      const a=document.createElement('a');
+      a.className='video-link';
+      a.href=cfg.videoPage;
+      a.target='_blank';
+      a.rel='noopener';
+      if(cfg.videoPreview) a.style.backgroundImage='url("'+cfg.videoPreview+'")';
+      a.innerHTML='<div class="playbox">▶ Смотреть видео со спичками<small>Откроется в отдельном окне</small></div>';
+      slot.prepend(a);
     }
   </script>
 </body></html>
