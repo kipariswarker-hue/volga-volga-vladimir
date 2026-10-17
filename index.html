@@ -31,6 +31,7 @@
     .video-shell{position:relative;background:linear-gradient(145deg,#0f4f69,#0b3148);border-radius:30px;padding:12px;box-shadow:var(--shadow);min-height:520px;overflow:hidden}
     .video-slot{position:absolute;inset:12px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#7dd3fc,#0e7490 58%,#164e63)}
     .video-slot video,.video-slot iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+    .mobile-video-play{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:8;border:0;border-radius:999px;background:rgba(255,255,255,.96);color:var(--navy);font-weight:900;padding:13px 18px;box-shadow:0 10px 30px rgba(0,0,0,.22);cursor:pointer;white-space:nowrap}
     .video-link{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;text-align:center}
     .video-link:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,47,73,.08),rgba(8,47,73,.58))}
     .video-link .playbox{position:relative;z-index:1;background:rgba(255,255,255,.94);color:var(--navy);padding:16px 20px;border-radius:18px;font-weight:900;box-shadow:var(--shadow)}
@@ -161,32 +162,69 @@
 
       const v=document.createElement('video');
       v.src=cfg.videoMp4;
-      v.controls=true;
       v.playsInline=true;
-      v.preload='metadata';
+      v.preload='auto';
+      v.muted=true;
       v.poster=cfg.videoPoster||'';
-      v.muted=false;
       slot.prepend(v);
 
-      v.addEventListener('loadedmetadata',()=>{
-        try{ v.currentTime=start; }catch(e){}
-      });
+      const audio=new Audio('https://resource2.heygen.ai/audio/f10592b65d374e238f1c352ea2bd4d7e/original.mp3');
+      audio.preload='auto';
 
-      v.addEventListener('play',()=>{
-        if(v.currentTime < start || v.currentTime >= end-.05){
-          try{ v.currentTime=start; }catch(e){}
+      const play=document.createElement('button');
+      play.className='mobile-video-play';
+      play.type='button';
+      play.textContent='▶ Смотреть анекдот';
+      slot.append(play);
+
+      let started=false;
+
+      const prepare=()=>{
+        try{ v.currentTime=start; }catch(e){}
+        try{ audio.currentTime=start; }catch(e){}
+      };
+
+      const stop=()=>{
+        v.pause();
+        audio.pause();
+        started=false;
+        prepare();
+        play.textContent='▶ Смотреть анекдот';
+      };
+
+      const startPlayback=async()=>{
+        if(!started) prepare();
+        try{
+          await Promise.all([v.play(),audio.play()]);
+          started=true;
+          play.textContent='❚❚ Пауза';
+        }catch(e){
+          v.pause();
+          audio.pause();
+          play.textContent='▶ Смотреть анекдот';
+          showToast('Нажмите ещё раз, чтобы запустить видео.');
+        }
+      };
+
+      play.addEventListener('click',()=>{
+        if(v.paused) startPlayback();
+        else{
+          v.pause();
+          audio.pause();
+          play.textContent='▶ Продолжить';
         }
       });
 
       v.addEventListener('timeupdate',()=>{
-        if(v.currentTime >= end){
-          v.pause();
-          try{ v.currentTime=start; }catch(e){}
-        }
+        if(v.currentTime>=end) stop();
       });
 
+      v.addEventListener('ended',stop);
       v.addEventListener('error',()=>{
-        showToast('Видео не загрузилось. Обновите страницу и попробуйте ещё раз.');
+        showToast('Видео не загрузилось. Обновите страницу.');
+      });
+      audio.addEventListener('error',()=>{
+        showToast('Звук не загрузился. Обновите страницу.');
       });
     } else if(cfg.videoPage){
       placeholder.remove();
