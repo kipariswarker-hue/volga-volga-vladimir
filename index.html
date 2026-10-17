@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#082f49">
+  <meta name="description" content="Праздничный борт капитана Владимира. День рождения, хорошие проекты и правильные подарки.">
+  <title>Капитан Владимир — день рождения</title>
+  <style>
+    :root{
+      --navy:#082f49;--sea:#0e7490;--sky:#e0f2fe;--foam:#f8fafc;
+      --gold:#f4b942;--ink:#0f172a;--muted:#64748b;--card:rgba(255,255,255,.92);
+      --r:24px;--shadow:0 22px 60px rgba(8,47,73,.20)
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);
+      background:linear-gradient(180deg,#dff5ff 0,#f8fafc 44%,#eef7f9 100%);line-height:1.5}
+    a{text-decoration:none;color:inherit}.wrap{width:min(100% - 28px,1040px);margin:auto}
+    .hero{min-height:100svh;position:relative;overflow:hidden;padding:18px 0 44px}
+    .hero:before{content:"";position:absolute;inset:auto -15% -16vh -15%;height:47vh;
+      background:linear-gradient(180deg,#1592ad,#0b607b 55%,#08475f);border-radius:50% 50% 0 0/12% 12% 0 0}
+    .hero:after{content:"";position:absolute;left:-10%;right:-10%;bottom:26vh;height:20px;
+      background:rgba(255,255,255,.6);filter:blur(7px);transform:rotate(-1deg)}
+    .top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+    .logo{font-weight:900;letter-spacing:.02em;color:var(--navy)}.logo small{display:block;font-size:11px;color:var(--muted);font-weight:700}
+    .badge{font-size:12px;font-weight:800;background:#fff;border:1px solid rgba(8,47,73,.12);border-radius:999px;padding:8px 11px}
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.03fr .97fr;gap:30px;align-items:center;padding-top:28px}
+    h1{font-size:clamp(42px,8vw,78px);line-height:.98;letter-spacing:-.045em;margin:14px 0 18px;color:var(--navy)}
+    .lead{font-size:clamp(18px,2.3vw,23px);max-width:650px;color:#334155;margin:0}
+    .quote{display:inline-block;margin-top:20px;background:var(--navy);color:#fff;border-radius:16px;padding:12px 15px;font-weight:850}
+    .video-shell{position:relative;background:linear-gradient(145deg,#0f4f69,#0b3148);border-radius:30px;padding:12px;box-shadow:var(--shadow);min-height:520px;overflow:hidden}
+    .video-slot{position:absolute;inset:12px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#7dd3fc,#0e7490 58%,#164e63)}
+    .video-slot video,.video-slot iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+    .placeholder{height:100%;display:grid;place-items:center;text-align:center;color:#fff;padding:30px}
+    .captain{font-size:96px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2))}
+    .ring{position:absolute;right:18px;top:18px;width:105px;height:105px;border:16px solid #fff;border-radius:50%;
+      box-shadow:inset 0 0 0 7px #ef4444,0 8px 25px rgba(0,0,0,.18);display:grid;place-items:center;color:#fff;font-weight:950;font-size:10px;text-align:center;transform:rotate(8deg)}
+    .ring span{background:#0b3148;padding:3px 5px;border-radius:6px}
+    .deck{position:absolute;left:0;right:0;bottom:0;height:20%;background:linear-gradient(#c89452,#936332)}
+    .section{position:relative;z-index:3;padding:68px 0}.title{text-align:center;max-width:760px;margin:0 auto 28px}
+    .eyebrow{color:var(--sea);font-size:13px;text-transform:uppercase;letter-spacing:.12em;font-weight:900}
+    h2{font-size:clamp(30px,5vw,50px);line-height:1.05;margin:8px 0 12px;letter-spacing:-.03em}.muted{color:var(--muted)}
+    .gifts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .gift{background:var(--card);backdrop-filter:blur(8px);border:1px solid rgba(8,47,73,.10);border-radius:var(--r);padding:20px;box-shadow:0 10px 35px rgba(8,47,73,.08);display:flex;gap:16px;align-items:center;transition:.18s transform,.18s box-shadow}
+    .gift:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(8,47,73,.14)}.gift .ico{width:52px;height:52px;border-radius:16px;background:#fff3ce;display:grid;place-items:center;font-size:27px;flex:0 0 auto}
+    .gift b{display:block;font-size:18px}.gift small{color:var(--muted)}
+    .talk{background:var(--navy);color:#fff;border-radius:30px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;box-shadow:var(--shadow)}
+    .talk h2{margin-top:0}.talk p{color:#cbd5e1;margin-bottom:0}.btn{display:inline-flex;justify-content:center;align-items:center;border:0;border-radius:15px;background:var(--gold);color:#1f2937;font-weight:900;padding:14px 18px;min-height:52px;cursor:pointer}
+    .btn.alt{background:#fff;color:var(--navy)}.story{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .fact{background:#fff;border-radius:20px;padding:20px;border:1px solid #dbe8ed}.fact strong{font-size:28px;color:var(--navy);display:block}.fact span{color:var(--muted)}
+    .footer{padding:34px 0 46px;text-align:center;color:var(--muted);font-size:13px}
+    .toast{position:fixed;z-index:20;left:50%;bottom:20px;transform:translate(-50%,30px);opacity:0;background:var(--navy);color:#fff;padding:12px 16px;border-radius:14px;transition:.2s;max-width:min(92vw,520px);text-align:center}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:760px){
+      .hero{min-height:auto;padding-bottom:24px}.hero-grid{grid-template-columns:1fr;padding-top:12px}.video-shell{min-height:61vh;max-height:620px}
+      h1{font-size:clamp(46px,14vw,70px)}.lead{font-size:19px}.gifts{grid-template-columns:1fr}.talk{grid-template-columns:1fr}.talk .btn{width:100%}.story{grid-template-columns:1fr}.section{padding:48px 0}.badge{font-size:11px}.ring{width:90px;height:90px;border-width:13px}
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="wrap">
+      <div class="top">
+        <div class="logo">ВОЛГА-ВОЛГА<small>праздничный борт</small></div>
+        <div class="badge">🎂 У капитана день рождения</div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Капитан Владимир принимает поздравления</div>
+          <h1>30 лет плаваю в этом бизнесе. Все мели знаю.</h1>
+          <p class="lead"><strong>Сегодня у меня день рождения.</strong> Подарки принимаю. Выбирайте на сайте.</p>
+          <div class="quote">Сначала анекдот — потом к подаркам ⚓</div>
+        </div>
+        <div class="video-shell" aria-label="Видеообращение Владимира">
+          <div class="video-slot" id="videoSlot">
+            <div class="placeholder" id="videoPlaceholder">
+              <div>
+                <div class="captain">⚓</div>
+                <b>Видео капитана готовится к выходу в море</b><br>
+                <small>Яхта · тельняшка · «Волга-Волга»</small>
+              </div>
+            </div>
+          </div>
+          <div class="ring"><span>ВОЛГА-ВОЛГА</span></div>
+          <div class="deck"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="title">
+        <div class="eyebrow">Подарочный причал</div>
+        <h2>Подарки принимаю. Выбирайте.</h2>
+        <div class="muted">Четыре варианта. Капитан человек практический.</div>
+      </div>
+      <div class="gifts">
+        <a class="gift" data-start="contract" href="#"><div class="ico">📑</div><div><b>Серьёзный контракт</b><small>Правильный подарок от серьёзных людей.</small></div></a>
+        <a class="gift" data-start="contact" href="#"><div class="ico">🤝</div><div><b>Полезное знакомство</b><small>Иногда стоит дороже рекламы.</small></div></a>
+        <a class="gift" data-start="transfer" href="#"><div class="ico">💸</div><div><b>Денежный перевод</b><small>Капитан не станет спорить с хорошей идеей.</small></div></a>
+        <a class="gift" data-start="twenty" href="#"><div class="ico">💰</div><div><b>20 миллионов без сдачи</b><small>Вот это уже разговор взрослых людей.</small></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="story">
+        <div class="fact"><strong>30 лет</strong><span>в бизнесе — мели, фарватеры и встречные течения изучены.</span></div>
+        <div class="fact"><strong>Бауманка</strong><span>окончена на отлично. Поэтому к задачам — по существу.</span></div>
+        <div class="fact"><strong>12 месяцев</strong><span>рыбалки в году: летом и зимой. Плохой сезон — не аргумент.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="talk">
+    <div class="wrap">
+      <div class="talk">
+        <div>
+          <div class="eyebrow" style="color:#7dd3fc">Связь с капитаном</div>
+          <h2>Есть вопрос? Поговорите с цифровым Владимиром.</h2>
+          <p>Он постарается ответить. Правда, первые три раза может сначала рассказать анекдот. У каждого капитана свои навигационные приборы.</p>
+        </div>
+        <a class="btn alt" id="talkBtn" href="#">Поговорить с капитаном</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="wrap">Праздничная страница · сделана с юмором и уважением к имениннику</div></footer>
+  <div class="toast" id="toast"></div>
+
+  <script src="./config.js"></script>
+  <script>
+    const cfg = window.VH_BIRTHDAY || {};
+    const toast = document.getElementById('toast');
+    const showToast = (m) => { toast.textContent=m; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2400); };
+
+    function tg(start){
+      if(!cfg.telegramBot){ showToast('Связь с капитаном ещё швартуется. Скоро будет готово.'); return '#'; }
+      return 'https://t.me/' + cfg.telegramBot.replace('@','') + '?start=' + encodeURIComponent(start || 'hello');
+    }
+    document.querySelectorAll('[data-start]').forEach(a=>a.addEventListener('click',e=>{
+      e.preventDefault(); const url=tg(a.dataset.start); if(url!=='#') location.href=url;
+    }));
+    document.getElementById('talkBtn').addEventListener('click',e=>{e.preventDefault();const url=tg('talk');if(url!=='#') location.href=url;});
+
+    const slot=document.getElementById('videoSlot');
+    const placeholder=document.getElementById('videoPlaceholder');
+    if(cfg.videoMp4){
+      placeholder.remove();
+      const v=document.createElement('video'); v.src=cfg.videoMp4; v.controls=true; v.playsInline=true; v.preload='metadata'; v.poster=cfg.videoPoster||''; slot.prepend(v);
+    } else if(cfg.videoEmbed){
+      placeholder.remove();
+      const f=document.createElement('iframe'); f.src=cfg.videoEmbed; f.allow='autoplay; fullscreen; picture-in-picture'; f.allowFullscreen=true; slot.prepend(f);
+    }
+  </script>
+</body></html>
