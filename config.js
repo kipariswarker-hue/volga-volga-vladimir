@@ -3,6 +3,6 @@ window.VH_BIRTHDAY = {
   telegramBot: "VolgaVolgaVladimirBot",
   // Страница готового HeyGen-видео с оригинальным голосом Владимира.
   videoMp4: "",
-  videoEmbed: "https://app.heygen.com/videos/8d0b623f998fbd6525604600c929d81a",
+  videoEmbed: "https://app.heygen.com/videos/7216c14efbf2da7beb86c93c90eb8513",
   videoPoster: ""
 };
