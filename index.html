@@ -35,6 +35,7 @@
     .video-link:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,47,73,.08),rgba(8,47,73,.58))}
     .video-link .playbox{position:relative;z-index:1;background:rgba(255,255,255,.94);color:var(--navy);padding:16px 20px;border-radius:18px;font-weight:900;box-shadow:var(--shadow)}
     .video-link .playbox small{display:block;font-weight:700;color:#475569;margin-top:4px}
+    .video-play-btn{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:6;border:0;border-radius:999px;background:rgba(255,255,255,.94);color:var(--navy);font-weight:900;padding:13px 18px;box-shadow:0 10px 30px rgba(0,0,0,.22);cursor:pointer;white-space:nowrap}
     .video-caption{margin:12px 8px 0;text-align:center;color:#334155;font-weight:800;font-size:16px}
     .placeholder{height:100%;display:grid;place-items:center;text-align:center;color:#fff;padding:30px}
     .captain{font-size:96px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2))}
@@ -155,7 +156,93 @@
     const placeholder=document.getElementById('videoPlaceholder');
     if(cfg.videoMp4){
       placeholder.remove();
-      const v=document.createElement('video'); v.src=cfg.videoMp4; v.controls=true; v.playsInline=true; v.preload='metadata'; v.poster=cfg.videoPoster||''; slot.prepend(v);
+
+      const start=Number(cfg.clipStart||0);
+      const end=Number(cfg.clipEnd||9999);
+
+      const v=document.createElement('video');
+      v.src=cfg.videoMp4;
+      v.playsInline=true;
+      v.preload='metadata';
+      v.poster=cfg.videoPoster||'';
+      v.muted=true;
+      v.setAttribute('muted','');
+      slot.prepend(v);
+
+      const audio=cfg.videoAudio ? new Audio(cfg.videoAudio) : null;
+      if(audio){ audio.preload='auto'; }
+
+      const play=document.createElement('button');
+      play.type='button';
+      play.className='video-play-btn';
+      play.textContent='▶ Смотреть анекдот';
+      slot.append(play);
+
+      const reset=()=>{
+        v.pause();
+        if(audio){ audio.pause(); }
+        if(Number.isFinite(start)){
+          try{ v.currentTime=start; }catch(e){}
+          if(audio){ try{ audio.currentTime=start; }catch(e){} }
+        }
+        play.textContent='▶ Смотреть анекдот';
+      };
+
+      const begin=async()=>{
+        try{
+          if(v.currentTime < start || v.currentTime >= end-.08) v.currentTime=start;
+          if(audio) audio.currentTime=v.currentTime;
+          v.muted=true;
+          const jobs=[v.play()];
+          if(audio) jobs.push(audio.play());
+          await Promise.all(jobs);
+          play.textContent='❚❚ Пауза';
+        }catch(e){
+          v.pause();
+          if(audio) audio.pause();
+          play.textContent='▶ Смотреть анекдот';
+          showToast('Нажмите ещё раз, чтобы запустить видео со звуком.');
+        }
+      };
+
+      play.addEventListener('click',()=>{
+        if(v.paused) begin();
+        else{
+          v.pause();
+          if(audio) audio.pause();
+          play.textContent='▶ Продолжить';
+        }
+      });
+      v.addEventListener('click',()=>play.click());
+
+      v.addEventListener('loadedmetadata',()=>{
+        if(Number.isFinite(start)) v.currentTime=start;
+      });
+
+      v.addEventListener('timeupdate',()=>{
+        if(v.currentTime >= end){
+          reset();
+          return;
+        }
+        if(audio && !audio.paused && Math.abs(audio.currentTime-v.currentTime)>.18){
+          audio.currentTime=v.currentTime;
+        }
+      });
+
+      v.addEventListener('pause',()=>{
+        if(audio && !audio.paused) audio.pause();
+        if(v.currentTime < end-.08 && v.currentTime > start+.08) play.textContent='▶ Продолжить';
+      });
+
+      v.addEventListener('error',()=>{
+        showToast('Видео не загрузилось. Обновите страницу и попробуйте ещё раз.');
+      });
+
+      if(audio){
+        audio.addEventListener('error',()=>{
+          showToast('Звук не загрузился. Обновите страницу и попробуйте ещё раз.');
+        });
+      }
     } else if(cfg.videoPage){
       placeholder.remove();
       const a=document.createElement('a');
@@ -164,7 +251,7 @@
       a.target='_blank';
       a.rel='noopener';
       if(cfg.videoPreview) a.style.backgroundImage='url("'+cfg.videoPreview+'")';
-      a.innerHTML='<div class="playbox">▶ Смотреть видео со спичками<small>Откроется в отдельном окне</small></div>';
+      a.innerHTML='<div class="playbox">▶ Смотреть видео<small>Откроется отдельно</small></div>';
       slot.prepend(a);
     }
   </script>
