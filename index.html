@@ -157,8 +157,8 @@
     if(cfg.videoMp4){
       placeholder.remove();
 
-      const start=Number(cfg.clipStart||0);
-      const end=Number(cfg.clipEnd||9999);
+      const start=4.15;
+      const end=18.55;
 
       const v=document.createElement('video');
       v.src=cfg.videoMp4;
@@ -169,8 +169,8 @@
       v.setAttribute('muted','');
       slot.prepend(v);
 
-      const audio=cfg.videoAudio ? new Audio(cfg.videoAudio) : null;
-      if(audio){ audio.preload='auto'; }
+      const audio=new Audio('https://resource2.heygen.ai/audio/f10592b65d374e238f1c352ea2bd4d7e/original.mp3');
+      audio.preload='auto';
 
       const play=document.createElement('button');
       play.type='button';
