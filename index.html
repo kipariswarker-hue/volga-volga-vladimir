@@ -119,6 +119,15 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
 .gifts,.story{gap:22px}.talk{gap:24px}
 @media(prefers-reduced-motion:reduce){.gift,.btn{transition:none}}
 
+
+.hero-grid .birthday-headline{font-size:clamp(38px,5.5vw,60px);line-height:1.09;letter-spacing:-.035em;margin:14px 0 22px;color:#124660;text-shadow:0 1px 0 #e8fbff,0 2px 0 #9cbecb,0 3px 0 #6e96a8,0 4px 0 #416c82,0 9px 16px #082f4938}
+.hero-grid .birthday-headline span{display:inline-block;color:#c47b17;text-shadow:0 1px 0 #fff2bc,0 2px 0 #986021,0 3px 0 #80501c,0 4px 0 #624019,0 8px 15px #71451640}
+.captain-experience{font-size:clamp(23px,3vw,31px);line-height:1.25;font-weight:800;color:#22536a;margin:0 0 22px;text-shadow:0 1px 0 #fff}
+.hero-invite{display:inline-block;padding:9px 13px;border-radius:10px;background:linear-gradient(#fff8df,#f4d18b);color:#68481e;border:1px solid #fff3c5;box-shadow:0 3px 0 #caab6d,0 8px 16px #67451c15;letter-spacing:.07em}
+.hero-invite-link{font-size:17px;background:linear-gradient(145deg,#19546c,#062d45);border:1px solid #6da1b5;box-shadow:inset 0 1px 0 #c2ebff55,0 4px 0 #032337,0 10px 22px #082f4930;transition:transform .2s}
+.hero-invite-link:hover{transform:translateY(-2px)}
+.hero-grid .lead{font-size:clamp(18px,2vw,21px);color:#284c60}
+@media(max-width:760px){.hero-grid .birthday-headline{font-size:clamp(37px,10vw,60px)}.captain-experience{font-size:25px}.hero-invite{font-size:11px}.hero-invite-link{font-size:16px}}
   </style>
 </head>
 <body>
@@ -126,14 +135,15 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
     <div class="wrap">
       <div class="top">
         <div class="logo">ВОЛГА-ВОЛГА<small>праздничный борт</small></div>
-        <div class="badge">🎂 У капитана день рождения</div>
+        <div class="badge">🎂 День рождения на борту</div>
       </div>
       <div class="hero-grid">
         <div>
-          <div class="eyebrow">Капитан Владимир принимает поздравления</div>
-          <h1>30 лет плаваю в этом бизнесе. Все мели знаю.</h1>
-          <p class="lead">Сначала — анекдот от капитана. Потом можно переходить к подаркам.</p>
-          <div class="quote">Сначала анекдот — потом к подаркам ⚓</div>
+          <div class="eyebrow hero-invite">Сегодня весь борт — для друзей</div>
+          <h1 class="birthday-headline">У капитана<br><span>день рождения!</span></h1>
+          <p class="captain-experience">30 лет плаваю в этом бизнесе.<br>Все мели знаю.</p>
+          <p class="lead">Заходите на борт! Здесь встречают с анекдотом, принимают поздравления и поднимают тосты за настоящую дружбу.</p>
+          <a class="quote hero-invite-link" href="#talk">Ваше пожелание — лучший повод поднять тост. ⚓</a>
         </div>
         <div class="video-shell" aria-label="Анекдот Владимира">
           <div class="video-slot" id="videoSlot">
