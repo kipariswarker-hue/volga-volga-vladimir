@@ -194,6 +194,13 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
 .gift-motto strong{color:#ffda87;font-weight:850}
 .gift-motto span{font-weight:600}
 @media(max-width:480px){.gift-motto{display:flex;flex-direction:column;padding:14px 16px;gap:3px}}
+
+.gift-motto{display:block;width:fit-content;max-width:100%;margin:18px auto 0;padding:3px 0;border:0;border-radius:0;box-shadow:none;font-weight:650;font-size:clamp(18px,2.2vw,23px);line-height:1.5;text-shadow:none;color:#e8c58e;background:none}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+ .gift-motto{background-image:linear-gradient(105deg,#d9b77f 0%,#d9b77f 43%,#ffca59 47%,#fffbe5 49.5%,#fff 50%,#fff0a6 50.5%,#ffb62f 53%,#d9b77f 57%,#d9b77f 100%);background-size:300% 100%;background-position:100% 0;background-clip:text;-webkit-background-clip:text;color:transparent;animation:motto-spark 5.5s linear infinite}
+}
+@keyframes motto-spark{0%{background-position:100% 0}45%,100%{background-position:0% 0}}
+@media(prefers-reduced-motion:reduce){.gift-motto{animation:none;background:none;color:#e8c58e}}
   </style>
 </head>
 <body>
@@ -227,7 +234,7 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
       <div class="title">
         <div class="eyebrow">Подарочный причал</div>
         <h2>Сегодня у меня день рождения.<br><span>Подарки принимаю. Выбирайте.</span></h2>
-        <div class="gift-motto"><strong>Четыре варианта.</strong><span>Капитан человек практический.</span></div>
+        <div class="gift-motto">Четыре варианта. Капитан человек практический.</div>
       </div>
       <div class="gifts">
         <a class="gift" data-start="contract" href="https://t.me/VolgaVolgaVladimirBot?start=contract"><div class="ico gift-medallion gift-realistic" aria-hidden="true"></div><div><b>Серьёзный контракт</b><small>Правильный подарок от серьёзных людей.</small></div></a>
