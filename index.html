@@ -129,6 +129,35 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
 .hero-grid .lead{font-size:clamp(18px,2vw,21px);color:#284c60}
 @media(max-width:760px){.hero-grid .birthday-headline{font-size:clamp(37px,10vw,60px)}.captain-experience{font-size:25px}.hero-invite{font-size:11px}.hero-invite-link{font-size:16px}}
 .hero-grid h1.captain-experience{font-size:clamp(23px,3vw,31px);line-height:1.25;letter-spacing:normal;margin:20px 0 22px;color:#22536a;text-shadow:0 1px 0 #fff}
+
+/* Festive captain's deck — isolated first-screen design */
+.hero{min-height:min(940px,100svh);padding:24px 0 62px;color:#eef5f6;background:radial-gradient(ellipse at 90% 30%,#1c5666 0,transparent 55%),linear-gradient(135deg,#061a29 0%,#0b3448 55%,#041b2b 100%);border-bottom:1px solid #bb9455;box-shadow:0 16px 36px #082f4926;isolation:isolate}
+.hero:before{inset:0;width:auto;height:auto;border-radius:0;transform:none;opacity:.22;background:repeating-radial-gradient(ellipse at 10% 140%,transparent 0 40px,#82d3d333 47px,transparent 58px 90px);filter:blur(5px);animation:deck-water 18s ease-in-out infinite alternate;pointer-events:none}
+.hero:after{inset:0;height:auto;transform:none;filter:none;opacity:.45;background:radial-gradient(ellipse at 75% 105%,#4ba5b533,transparent 55%),linear-gradient(115deg,transparent 35%,#a3e4db0a 49%,transparent 60%);pointer-events:none}
+.hero .top{gap:22px;align-items:center;padding:8px 0 22px;border-bottom:1px solid #d3b47744}
+.hero .logo{color:#f6e1b5;font-size:22px;letter-spacing:.08em;text-shadow:0 2px 2px #0008}
+.hero .logo small{color:#c5d5dc;font-size:12px;letter-spacing:.03em;margin-top:4px}
+.hero .badge{position:relative;overflow:hidden;max-width:260px;text-align:center;padding:14px 20px;font-size:16px;line-height:1.3;color:#3e2c14;border:1px solid #ffe9b1;background:linear-gradient(155deg,#fff2c6,#dbb66c 48%,#b78a40);box-shadow:inset 0 2px 2px #fff9,0 4px 0 #79592d,0 10px 22px #0005;text-shadow:0 1px #ffedbd}
+.hero .badge:after{content:"";position:absolute;inset:-50% -80%;background:linear-gradient(105deg,transparent 44%,#fff9 50%,transparent 56%);transform:translateX(-65%);animation:brass-glint 1.3s ease-out 1.4s both;pointer-events:none}
+.hero .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;padding-top:40px;align-items:center}
+.hero-copy{min-width:0;padding:26px 0 32px;animation:deck-arrive .85s ease-out .18s both}
+.hero-grid h1.captain-experience{font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,4.1vw,46px);font-weight:700;line-height:1.2;letter-spacing:-.025em;color:#f1f4ed;margin:0 0 28px;text-shadow:0 1px 0 #fff5,0 3px 0 #112d3d,0 7px 14px #0008}
+.experience-gold{display:block;margin-top:18px;font-size:.72em;letter-spacing:.005em;color:#e9c57f;text-shadow:0 1px 0 #fff2,0 2px 0 #644818,0 5px 12px #0008}
+.hero-grid .lead{font-size:clamp(18px,1.9vw,20px);color:#ccdce3;line-height:1.7;max-width:440px}
+.hero .hero-invite-link{display:block;max-width:410px;margin-top:30px;padding:18px 22px;border-radius:14px;border:1px solid #f3d69a;background:linear-gradient(160deg,#f9e5ae,#d3aa5b 55%,#b6863e);color:#30240f;font-size:18px;line-height:1.5;text-align:center;text-shadow:0 1px #fff6;box-shadow:inset 0 2px 2px #fff8,0 5px 0 #725020,0 14px 25px #0005}
+.hero .hero-invite-link:hover{transform:translateY(-3px);filter:brightness(1.08)}
+.hero .hero-invite-link:active{transform:translateY(3px)}
+.hero .video-shell{min-height:580px;border-radius:90px 90px 28px 28px;padding:12px;background:linear-gradient(135deg,#fff0bb,#a77c36 23%,#ecd095 50%,#6f4c1f 78%,#d8b674);border:1px solid #f5daa1;box-shadow:inset 0 2px 3px #fff8,0 0 0 7px #061f31,0 0 0 8px #b98d4855,0 24px 45px #0007,0 0 55px #6dd0d022;animation:deck-arrive 1s ease-out both}
+.hero .video-slot{border-radius:80px 80px 18px 18px;box-shadow:inset 0 0 20px #0007}
+.hero .mobile-video-play{font-size:17px;padding:15px 23px;background:linear-gradient(#fff0bb,#ddb568);color:#352911;border:1px solid #fff2c5;box-shadow:inset 0 2px 2px #fff8,0 4px 0 #78562b,0 9px 20px #0007;transition:filter .2s}
+.hero .mobile-video-play:hover{filter:brightness(1.12)}
+@keyframes deck-water{from{transform:translate3d(-2%,1%,0) scale(1.06)}to{transform:translate3d(2%,-1%,0) scale(1.12)}}
+@keyframes deck-arrive{from{opacity:0;transform:translateY(18px) scale(.98);filter:blur(3px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes brass-glint{from{transform:translateX(-65%)}to{transform:translateX(65%)}}
+@media(max-width:760px){.hero{min-height:auto;padding:16px 0 36px}.hero .top{gap:12px}.hero .logo{font-size:17px}.hero .logo small{font-size:10px;max-width:170px}.hero .badge{font-size:12px;padding:11px 13px;max-width:155px}.hero .hero-grid{grid-template-columns:1fr;gap:28px;padding-top:28px}.hero-copy{padding:0}.hero-grid h1.captain-experience{font-size:clamp(32px,8vw,44px);margin-bottom:20px}.hero-grid .lead{font-size:18px;max-width:none}.hero .hero-invite-link{max-width:none;margin-top:22px;font-size:17px}.hero .video-shell{min-height:560px;max-height:none;margin:0 7px}.hero .video-slot img{object-position:center center}}
+@media(max-width:380px){.hero .video-shell{min-height:480px}.hero .badge{max-width:130px}.hero .logo{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.hero:before,.hero-copy,.hero .video-shell,.hero .badge:after{animation:none}.hero .badge:after{display:none}}
+
   </style>
 </head>
 <body>
@@ -139,10 +168,10 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
         <div class="badge">🎂 День рождения капитана</div>
       </div>
       <div class="hero-grid">
-        <div>
+        <div class="hero-copy">
           
           
-          <h1 class="captain-experience">30 лет плаваю в этом бизнесе.<br>Все мели знаю.</h1>
+          <h1 class="captain-experience">30 лет плаваю<br>в этом бизнесе.<span class="experience-gold">Все мели знаю.</span></h1>
           <p class="lead">Заходите на борт! Здесь встречают с анекдотом, принимают поздравления и поднимают тосты за настоящую дружбу.</p>
           <a class="quote hero-invite-link" href="#talk">Ваше пожелание — лучший повод поднять тост. ⚓</a>
         </div>
