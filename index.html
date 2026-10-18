@@ -251,6 +251,43 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
 
 .footer{padding:20px 0 24px;background:none;border:0;box-shadow:none;color:#374f5e;font-size:15px;font-weight:600;line-height:1.55;text-align:center}
 @media(max-width:480px){.footer{font-size:14px;padding:18px 0 22px}}
+
+/* Unified visual scale */
+:root{--brass:#b89559;--brass-light:#edcf94;--cream:#f2e8d4;--panel-shadow:inset 0 1px 2px #ffe6b52b,0 4px 0 #080a0bbb,0 14px 26px #0004}
+.hero .badge,.hero .hero-invite-link,.hero .mobile-video-play,#talk #talkBtn{background:linear-gradient(150deg,#f1dcac,#d3b071 55%,#b68c4d);border-color:#e7ca90;color:#332714}
+.hero .hero-invite-link,#talk #talkBtn{box-shadow:inset 0 1px 2px #fff8,0 5px 0 #765b33,0 12px 23px #0005}
+.hero .video-shell{background:linear-gradient(135deg,#edd4a1,#a88043 24%,#d9bb80 52%,#89642f 80%,#c1a064);border-color:var(--brass)}
+.gift-deck .gift,.instrument-deck .instrument-panel,#talk .talk,#talk .birthday-toast{border-color:var(--brass);border-radius:22px;box-shadow:var(--panel-shadow)}
+.gift-deck h2,.instrument-deck h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(29px,3.7vw,42px);font-weight:700;line-height:1.3;color:var(--cream);text-shadow:0 2px 5px #0006}
+.gift-deck h2 span,.experience-gold,.gift-deck .gift b,.instrument-deck .fact strong{color:var(--brass-light)}
+.gift-deck .eyebrow,.instrument-deck .eyebrow,#talk .talk .eyebrow,.birthday-toast .eyebrow{color:#d8b983;font-size:12px;letter-spacing:.13em;line-height:1.5}
+.gift-deck,.instrument-deck,#talk{padding-top:72px;padding-bottom:76px}
+.gift-deck .title,.instrument-deck .title{margin-bottom:32px}
+.gift-deck .gifts,.instrument-deck .story{gap:24px}
+.gift-deck .gift{min-height:190px;padding:24px;gap:20px}
+.gift-deck .gift b{font-size:24px;line-height:1.25;text-shadow:0 2px 4px #0006}
+.gift-deck .gift small{font-size:15px;line-height:1.6}
+.gift-deck .gift-realistic{width:132px;height:132px;flex-basis:132px;border-color:var(--brass);border-radius:16px;box-shadow:inset 0 0 8px #0003,0 4px 9px #0004}
+.instrument-deck .instrument-panel{display:flex;flex-direction:column;padding:22px 20px 27px}
+.instrument-art{max-width:210px;margin-bottom:20px;flex-shrink:0}
+.instrument-label{margin-bottom:10px}
+.instrument-deck .fact strong{display:flex;align-items:center;justify-content:center;min-height:76px;margin-bottom:10px;font-size:34px;line-height:1.2;text-shadow:0 2px 4px #0006}
+.instrument-deck .fact .math-heading{font-size:27px}
+.instrument-deck .fact span{font-size:17px;line-height:1.6}
+#talk .talk{padding:32px;gap:30px}
+#talk .talk h2{font-size:clamp(33px,4vw,44px);text-shadow:0 2px 5px #0006}
+#talk #talkBtn{min-height:118px;font-size:23px}
+#talkBtn .captain-wax{width:68px;height:68px;flex-basis:68px}
+#talk .birthday-toast{padding:28px}
+.birthday-toast-grid{gap:28px}
+.birthday-toast img{border-color:var(--brass);border-radius:16px;box-shadow:0 9px 20px #0006,0 0 0 3px #a7804022}
+.footer{background:#140d09;color:#c8bba7;padding:18px 0 22px;font-size:14px;font-weight:500;border:0;box-shadow:none}
+@media(max-width:760px){.gift-deck,.instrument-deck,#talk{padding-top:48px;padding-bottom:52px}.gift-deck .gifts,.instrument-deck .story{gap:20px}.gift-deck .gift{min-height:160px;padding:20px;gap:17px}.gift-deck .gift-realistic{width:108px;height:108px;flex-basis:108px}.gift-deck .gift b{font-size:22px}.instrument-art{max-width:190px}.instrument-deck .fact strong{min-height:0;font-size:32px}.instrument-deck .fact .math-heading{font-size:26px}.instrument-deck .instrument-panel{padding:22px 24px 27px}#talk .talk{padding:24px 22px;gap:24px}#talk #talkBtn{min-height:112px;font-size:22px}#talkBtn .captain-wax{width:62px;height:62px;flex-basis:62px}#talk .birthday-toast{padding:20px}.birthday-toast-grid{gap:24px}.ember-copy{font-size:22px}}
+@media(max-width:380px){.gift-deck .gift{padding:17px;gap:13px}.gift-deck .gift-realistic{width:90px;height:96px;flex-basis:90px}.gift-deck .gift b{font-size:20px}#talk #talkBtn{font-size:20px;padding:16px;gap:12px}}
+.gift-motto{animation-delay:-1.1s}
+#talkBtn:after{animation-delay:-3.5s}
+.motion-paused,.motion-paused *,.motion-paused:before,.motion-paused:after,.motion-paused *:before,.motion-paused *:after{animation-play-state:paused!important}
+
   </style>
 </head>
 <body>
@@ -410,7 +447,7 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
           fireObserver.disconnect();
         }
       }, {threshold:0.15});
-      fireObserver.observe(toastCard);
+      fireObserver.observe(emberCopy);
     } else {
       lightToast();
     }
@@ -426,6 +463,13 @@ body{background:radial-gradient(ellipse at 15% 0,#fffdf4 0,transparent 42%),line
       instrumentObserver.observe(instrumentDeck);
     } else {
       instrumentDeck.classList.add('is-awake');
+    }
+
+    if ('IntersectionObserver' in window) {
+      const motionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => entry.target.classList.toggle('motion-paused', !entry.isIntersecting));
+      }, {threshold:0});
+      document.querySelectorAll('.hero, .gift-motto, #captainFacts, #talkBtn, .ember-copy').forEach(element => motionObserver.observe(element));
     }
 
     const play=document.getElementById('audioPlay');
