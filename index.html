@@ -66,15 +66,31 @@
 .birthday-toast-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:30px;align-items:center}
 .birthday-toast img{display:block;width:100%;max-height:640px;object-fit:cover;object-position:center 30%;border-radius:20px;border:1px solid #bd7d3e}
 .birthday-toast .eyebrow{color:#ffc483}.ember-copy{position:relative;margin:14px 0 0;color:#ffd4a1;font-size:clamp(18px,2vw,23px);line-height:1.65;font-weight:650;white-space:pre-line}
-.ember-copy:after{content:"";pointer-events:none;position:absolute;inset:-20px;background:radial-gradient(ellipse at 15% 85%,#ff9b1580,transparent 45%),radial-gradient(ellipse at 85% 70%,#ff4b0080,transparent 42%);opacity:0;filter:blur(15px)}
-.birthday-toast.is-lit .ember-copy{animation:fire-reveal 2.7s ease-out both,coal-glow 5s ease-in-out 2.7s infinite alternate}
-.birthday-toast.is-lit .ember-copy:after{animation:passing-flame 2.7s ease-out both}
+.ember-copy{white-space:pre-line}
+.ember-word{white-space:nowrap}
+.ember-char{opacity:1;color:#ffc080}
+.js-fire .ember-char{opacity:0}
+.birthday-toast.is-lit .ember-char{animation:letter-ignite .08s linear var(--delay) both,live-fire .19s ease-in-out var(--delay) infinite alternate}
+.birthday-toast.is-cooling .ember-char{opacity:1;animation:fire-to-coal 1.5s ease-out both}
+.birthday-toast.is-coal .ember-char{opacity:1;animation:coal-glow 2.9s ease-in-out var(--coal-delay) infinite alternate}
 .ember-toast-end{display:block;margin-top:20px;font-weight:800}
-@keyframes fire-reveal{0%{opacity:0;filter:blur(18px);transform:translateY(16px)}30%{opacity:.65;color:#fff3c5;text-shadow:0 -12px 22px #ffb300,0 -28px 32px #ff4b00}65%{opacity:1;filter:blur(1px);text-shadow:0 -5px 12px #ffae00,0 -13px 26px #e74200}100%{opacity:1;filter:blur(0);transform:translateY(0);text-shadow:0 0 6px #e66b2266}}
-@keyframes passing-flame{0%{opacity:0;transform:translateY(30px)}30%{opacity:1}65%{opacity:.6;transform:translateY(-25px)}100%{opacity:0;transform:translateY(-60px)}}
-@keyframes coal-glow{0%{color:#ffd0a0;text-shadow:0 0 4px #ff7b2233}50%{color:#ffe2bb;text-shadow:0 0 7px #ff8b2566,0 0 19px #e75c0033}100%{color:#ffc68c;text-shadow:0 0 5px #ff65004d}}
+@keyframes letter-ignite{from{opacity:0}to{opacity:1}}
+@keyframes live-fire{
+  0%{color:#fffbd3;text-shadow:0 0 3px #fff,0 -3px 6px #ffe600,1px -9px 12px #ff8b00,-2px -17px 19px #fa3900,2px -27px 25px #e6250099}
+  100%{color:#fff1ac;text-shadow:0 0 5px #fff4a0,-1px -5px 8px #ffce00,2px -13px 14px #ff6500,-3px -23px 21px #ef2900,1px -33px 27px #d51b0077}
+}
+@keyframes fire-to-coal{
+  0%{color:#fff5bd;text-shadow:0 0 5px #fff4a0,0 -5px 8px #ffce00,0 -13px 14px #ff6500,0 -23px 21px #ef2900}
+  60%{color:#ffba65;text-shadow:0 0 5px #ff9a28,0 -3px 8px #f56400}
+  100%{color:#ef9d57;text-shadow:0 0 3px #ff731b88,0 0 9px #e64b0033}
+}
+@keyframes coal-glow{
+  0%,100%{color:#ef9d57;text-shadow:0 0 3px #ff731b88,0 0 9px #e64b0033}
+  35%{color:#ffd19a;text-shadow:0 0 6px #ff9628bb,0 0 14px #f35b0066}
+  68%{color:#f6ae6a;text-shadow:0 0 4px #ff701b77,0 0 10px #e64b0044}
+}
 @media(max-width:760px){.birthday-toast{padding:20px}.birthday-toast-grid{grid-template-columns:1fr;gap:20px}.birthday-toast img{max-height:520px}.ember-copy{font-size:18px}.talk .btn{white-space:normal;text-align:center}}
-@media(prefers-reduced-motion:reduce){.birthday-toast.is-lit .ember-copy,.birthday-toast.is-lit .ember-copy:after{animation:none}}
+@media(prefers-reduced-motion:reduce){.birthday-toast .ember-char{opacity:1!important;animation:none!important;color:#ffd4a1}}
 
   </style>
 </head>
@@ -167,16 +183,59 @@
 
 
     const toastCard = document.getElementById('birthdayToast');
+    const emberCopy = toastCard.querySelector('.ember-copy');
+    const reducedFire = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Preserve paragraph and strong markup; wrap whole words to keep natural line breaks.
+    const textWalker = document.createTreeWalker(emberCopy, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (textWalker.nextNode()) textNodes.push(textWalker.currentNode);
+    let letterIndex = 0;
+    textNodes.forEach(node => {
+      const fragment = document.createDocumentFragment();
+      node.textContent.split(/(\\s+)/u).forEach(word => {
+        if (/^\\s+$/u.test(word)) {
+          fragment.append(document.createTextNode(word));
+          return;
+        }
+        const wrapper = document.createElement('span');
+        wrapper.className = 'ember-word';
+        Array.from(word).forEach(letter => {
+          const char = document.createElement('span');
+          char.className = 'ember-char';
+          char.textContent = letter;
+          char.dataset.order = letterIndex++;
+          wrapper.append(char);
+        });
+        fragment.append(wrapper);
+      });
+      node.replaceWith(fragment);
+    });
+    emberCopy.setAttribute('aria-label', emberCopy.textContent);
+    emberCopy.querySelectorAll('.ember-word').forEach(word => word.setAttribute('aria-hidden', 'true'));
+    const formationMs = 1800;
+    emberCopy.querySelectorAll('.ember-char').forEach(char => {
+      const order = Number(char.dataset.order);
+      char.style.setProperty('--delay', (order / Math.max(1, letterIndex - 1) * formationMs) + 'ms');
+      char.style.setProperty('--coal-delay', -(order % 13) * 173 + 'ms');
+    });
+    if (!reducedFire) toastCard.classList.add('js-fire');
+    const lightToast = () => {
+      toastCard.classList.add('is-lit');
+      if (reducedFire) return;
+      // Last letter finishes at formationMs + 80; hold the complete blaze for 2 seconds.
+      setTimeout(() => toastCard.classList.add('is-cooling'), formationMs + 80 + 2000);
+      setTimeout(() => toastCard.classList.add('is-coal'), formationMs + 80 + 2000 + 1500);
+    };
     if ('IntersectionObserver' in window) {
       const fireObserver = new IntersectionObserver(entries => {
-        if(entries.some(entry => entry.isIntersecting)){
-          toastCard.classList.add('is-lit');
+        if (entries.some(entry => entry.isIntersecting)) {
+          lightToast();
           fireObserver.disconnect();
         }
       }, {threshold:0.15});
       fireObserver.observe(toastCard);
     } else {
-      toastCard.classList.add('is-lit');
+      lightToast();
     }
 
     const play=document.getElementById('audioPlay');
