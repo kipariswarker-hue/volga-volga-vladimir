@@ -73,7 +73,7 @@
 .birthday-toast .eyebrow{line-height:1.5;overflow-wrap:break-word}
 .ember-char{opacity:1;color:#ffc080}
 .js-fire .ember-char{opacity:0}
-.birthday-toast.is-lit .ember-char{animation:letter-ignite .08s steps(1,end) var(--delay) both,live-fire var(--flame-speed,.43s) linear var(--delay) infinite}
+.birthday-toast.is-lit .ember-char{animation:live-fire var(--flame-speed,.43s) linear var(--delay) infinite}
 .birthday-toast.is-cooling .ember-char{opacity:1;animation:fire-to-coal 1.5s ease-out both}
 .birthday-toast.is-coal .ember-char{opacity:1;animation:coal-glow 2.9s ease-in-out var(--coal-delay) infinite alternate}
 .ember-toast-end{display:block;margin-top:20px;font-weight:800}
@@ -218,7 +218,7 @@
     });
     emberCopy.setAttribute('aria-label', emberCopy.textContent);
     emberCopy.querySelectorAll('.ember-word').forEach(word => word.setAttribute('aria-hidden', 'true'));
-    const formationMs = 3600;
+    const formationMs = 7200;
     emberCopy.querySelectorAll('.ember-char').forEach(char => {
       const order = Number(char.dataset.order);
       char.style.setProperty('--delay', (order / Math.max(1, letterIndex - 1) * formationMs) + 'ms');
@@ -229,9 +229,24 @@
     const lightToast = () => {
       toastCard.classList.add('is-lit');
       if (reducedFire) return;
-      // Last letter finishes at formationMs + 80; hold the complete blaze for 2 seconds.
-      setTimeout(() => toastCard.classList.add('is-cooling'), formationMs + 80 + 2000);
-      setTimeout(() => toastCard.classList.add('is-coal'), formationMs + 80 + 2000 + 1500);
+      const letters = Array.from(emberCopy.querySelectorAll('.ember-char'));
+      let shown = 0;
+      let firstFrame;
+      const revealFrame = now => {
+        if (firstFrame === undefined) firstFrame = now;
+        const elapsed = now - firstFrame;
+        const target = Math.min(letters.length, Math.floor(elapsed / formationMs * letters.length));
+        // Reveal one contiguous prefix: a visible letter can never have hidden letters before it.
+        while (shown < target) letters[shown++].style.opacity = '1';
+        if (shown < letters.length) {
+          requestAnimationFrame(revealFrame);
+        } else {
+          // Hold for two seconds from the actual frame showing the final letter.
+          setTimeout(() => toastCard.classList.add('is-cooling'), 2000);
+          setTimeout(() => toastCard.classList.add('is-coal'), 3500);
+        }
+      };
+      requestAnimationFrame(revealFrame);
     };
     if ('IntersectionObserver' in window) {
       const fireObserver = new IntersectionObserver(entries => {
