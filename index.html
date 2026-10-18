@@ -67,7 +67,10 @@
 .birthday-toast img{display:block;width:100%;max-height:640px;object-fit:cover;object-position:center 30%;border-radius:20px;border:1px solid #bd7d3e}
 .birthday-toast .eyebrow{color:#ffc483}.ember-copy{position:relative;margin:14px 0 0;color:#ffd4a1;font-size:clamp(18px,2vw,23px);line-height:1.65;font-weight:650;white-space:pre-line}
 .ember-copy{white-space:pre-line}
-.ember-word{white-space:nowrap}
+.birthday-toast-grid>div{min-width:0}
+.ember-copy{max-width:100%;overflow-wrap:break-word}
+.ember-word{white-space:nowrap;display:inline}
+.birthday-toast .eyebrow{line-height:1.5;overflow-wrap:break-word}
 .ember-char{opacity:1;color:#ffc080}
 .js-fire .ember-char{opacity:0}
 .birthday-toast.is-lit .ember-char{animation:letter-ignite .08s linear var(--delay) both,live-fire .19s ease-in-out var(--delay) infinite alternate}
@@ -192,8 +195,8 @@
     let letterIndex = 0;
     textNodes.forEach(node => {
       const fragment = document.createDocumentFragment();
-      node.textContent.split(/(\\s+)/u).forEach(word => {
-        if (/^\\s+$/u.test(word)) {
+      node.textContent.split(/(\s+)/u).forEach(word => {
+        if (/^\s+$/u.test(word)) {
           fragment.append(document.createTextNode(word));
           return;
         }
